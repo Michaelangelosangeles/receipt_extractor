@@ -1,0 +1,16 @@
+import tensorflow as tf
+import preprocess
+
+# Load the trained model
+model = tf.keras.models.load_model('models/vit_model.h5')
+
+# Load and preprocess new image
+new_images = preprocess.load_and_preprocess_data('data/val/')
+new_images = new_images / 255.0
+
+# Make predictions
+predictions = model.predict(new_images)
+
+# Interpret the predictions (assuming binary classification)
+for i, pred in enumerate(predictions):
+    print(f"Image {i}: {'Total Found' if pred > 0.5 else 'No Total Found'}")
